@@ -36,6 +36,7 @@ export class KeycloakService {
     if(authenticated){
       this._profile = (await this.keyCloak?.loadUserProfile()) as UserProfile;
       this._profile.token = this.keyCloak?.token;
+      console.log("my profile",this._profile)
     }
   }
 
@@ -46,5 +47,27 @@ export class KeycloakService {
   logout() {
     return this.keyCloak?.logout({redirectUri: 'http://localhost:4200'});
   }
+
+  // hasRole(role: string): boolean {
+  //   console.log("I have theses roles : ", this.keyCloak?.tokenParsed?.realm_access?.roles)
+  //   return this.keyCloak?.tokenParsed?.realm_access?.roles?.includes(role) ?? false;
+  // }
+
+  hasRole(role: string): boolean {
+    const clientId = this.keyCloak?.clientId;
+  
+    if (!clientId) {
+      console.error('Client ID is undefined.');
+      return false;
+    }
+  
+    const resourceAccess = this.keyCloak?.tokenParsed?.resource_access;
+  
+    // Check if the role exists in the roles array for the given client ID
+    const clientRoles = resourceAccess?.[clientId]?.roles || [];
+    console.log("my roles in resource: ", clientRoles)
+    return clientRoles.includes(role);
+  }
+  
 
 }
