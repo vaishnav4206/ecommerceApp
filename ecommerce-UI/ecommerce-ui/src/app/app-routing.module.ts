@@ -5,12 +5,14 @@ import { UserGuard } from './services/guards/user.guard';
 import { AdminComponent } from './components/admin/admin.component';
 import { UserComponent } from './components/user/user.component';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
+import { ProductComponent } from './components/product/product.component';
 
 const routes: Routes = [
   { path: 'admin', component: AdminComponent, canActivate: [AdminGuard] },
+  { path: 'products', component: ProductComponent, canActivate: [UserGuard] },
   { path: 'user', component: UserComponent, canActivate: [UserGuard] },
   { path: 'unauthorized', component: UnauthorizedComponent },
-  { path: '', redirectTo: 'user', pathMatch: 'full' }
+  { path: '', redirectTo: 'products', pathMatch: 'full' }
 ];
 
 
