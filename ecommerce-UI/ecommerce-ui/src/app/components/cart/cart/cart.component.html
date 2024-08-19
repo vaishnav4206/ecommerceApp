@@ -1,0 +1,50 @@
+
+
+   <div class="cart-list">
+    <mat-card class="cart-item" *ngFor="let item of cartItems">
+      <div class="cart-content">
+        <div class="cart-image">
+          <img [src]="'images/products/' + item.productName + '.jpg'" alt="{{ item.productName }}">
+        </div>
+        <div class="cart-details">
+          <h3>{{ item.productName }}</h3>
+          <p>Price: {{ item.price | currency }}</p>
+          <mat-form-field appearance="outline">
+            <mat-label>Quantity</mat-label>
+            <input matInput type="number" [(ngModel)]="item.quantity" (change)="updateQuantity(item, item.quantity)" min="1">
+          </mat-form-field>
+          <div class="remove-button">
+            <button mat-raised-button color="warn" (click)="removeItem(item.id)">
+              Remove
+            </button>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+  
+<!-- 
+  <div class="cart-list">
+    <div class="cart-item" *ngFor="let item of cartItems">
+        <img mat-card-image [src]="item.imageUrl" alt="{{ item.productName }}" class="cart-item-image">
+        
+        <div class="cart-item-details">
+            <h2>{{ item.productName }}</h2>
+            <p>Price: {{ item.price | currency }}</p>
+
+            <div class="quantity-controls">
+                <button mat-icon-button (click)="decreaseQuantity(item)">
+                    <mat-icon>remove</mat-icon>
+                </button>
+                <input matInput type="number" [(ngModel)]="item.quantity" min="1" readonly>
+                <button mat-icon-button (click)="increaseQuantity(item)">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </div>
+        </div>
+
+        <button mat-raised-button color="warn" class="remove-button" (click)="removeItem(item.id)">
+            Remove
+        </button>
+    </div>
+</div> -->

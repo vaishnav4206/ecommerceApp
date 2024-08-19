@@ -1,5 +1,15 @@
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatListModule } from '@angular/material/list';
+import { KeycloakAngularModule } from 'keycloak-angular';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,6 +22,8 @@ import { HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient, withInterceptor
 import { HttpTokenInterceptor } from './services/interceptor/http-token.interceptor';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { CartComponent } from './components/cart/cart/cart.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export function keycloakFactory(keycloakService: KeycloakService) {
   return () => keycloakService.init();
@@ -25,11 +37,23 @@ export function keycloakFactory(keycloakService: KeycloakService) {
     UnauthorizedComponent,
     ProductComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    KeycloakAngularModule,
+    MatListModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatToolbarModule,
+    MatSidenavModule,
   ],
   providers: [
     {
@@ -43,7 +67,8 @@ export function keycloakFactory(keycloakService: KeycloakService) {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpTokenInterceptor,
       multi: true
-    }
+    },
+    provideAnimationsAsync()
   ],
   bootstrap: [AppComponent]
 })
