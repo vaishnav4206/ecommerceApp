@@ -10,6 +10,8 @@ import { UnauthorizedComponent } from './components/unauthorized/unauthorized.co
 import { ProductComponent } from './components/product/product.component';
 import { HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { HttpTokenInterceptor } from './services/interceptor/http-token.interceptor';
+import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 export function keycloakFactory(keycloakService: KeycloakService) {
   return () => keycloakService.init();
@@ -21,7 +23,9 @@ export function keycloakFactory(keycloakService: KeycloakService) {
     AdminComponent,
     UserComponent,
     UnauthorizedComponent,
-    ProductComponent
+    ProductComponent,
+    HeaderComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

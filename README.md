@@ -28,8 +28,9 @@ CREATE TABLE Product (
 
 INSERT INTO Product (name, description, price, image_url, stock_quantity, created_at, updated_at)
 VALUES
-    ('Product A', 'Description for Product A', 19.99, 'http://example.com/imageA.jpg', 100, NOW(), NOW()),
-    ('Product B', 'Description for Product B', 29.99, 'http://example.com/imageB.jpg', 50, NOW(), NOW()),
-    ('Product C', 'Description for Product C', 39.99, 'http://example.com/imageC.jpg', 25, NOW(), NOW()),
-    ('Product D', 'Description for Product D', 49.99, 'http://example.com/imageD.jpg', 75, NOW(), NOW()),
-    ('Product E', 'Description for Product E', 59.99, 'http://example.com/imageE.jpg', 10, NOW(), NOW());
+    ('watch1', 'Description for Product A', 19.99, 'images/products/watch1.jpg', 100, NOW(), NOW()),
+    ('watch2', 'Description for Product B', 29.99, 'images/products/watch2.jpg', 50, NOW(), NOW()),
+    ('watch3', 'Description for Product C', 39.99, 'images/products/watch3.jpg.jpg', 25, NOW(), NOW()),
+    ('watch5', 'Description for Product D', 49.99, 'images/products/watch5.jpg.jpg', 75, NOW(), NOW()),
+    ('watch6', 'Description for Product E', 59.99, 'images/products/watch6.jpg.jpg', 10, NOW(), NOW());
+    ('watch7', 'Description for Product E', 59.99, 'images/products/watch7.jpg.jpg', 10, NOW(), NOW());
