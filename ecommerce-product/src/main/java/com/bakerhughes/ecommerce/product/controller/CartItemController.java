@@ -32,4 +32,12 @@ public class CartItemController {
         cartItemService.removeCartItem(id);
         return ResponseEntity.ok().build();
     }
+
+    @PatchMapping("/{id}/quantity")
+    public ResponseEntity<CartItem> updateCartItemQuantity(
+            @PathVariable Long id,
+            @RequestBody int quantity) {
+        CartItem updatedCartItem = cartItemService.updateCartItemQuantity(id, quantity);
+        return ResponseEntity.ok(updatedCartItem);
+    }
 }

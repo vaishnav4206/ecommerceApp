@@ -24,9 +24,16 @@ export class CartComponent {
     });
   }
 
+  // updateQuantity(cartItem: CartItem, newQuantity: number): void {
+  //   cartItem.quantity = newQuantity;
+  //   this.cartService.updateCartItem(cartItem).subscribe(() => {
+  //     console.log(`${cartItem.productName} quantity updated to ${newQuantity}`);
+  //   });
+  // }
+
   updateQuantity(cartItem: CartItem, newQuantity: number): void {
     cartItem.quantity = newQuantity;
-    this.cartService.updateCartItem(cartItem).subscribe(() => {
+    this.cartService.updateCartItemQuantity(cartItem).subscribe(() => {
       console.log(`${cartItem.productName} quantity updated to ${newQuantity}`);
     });
   }

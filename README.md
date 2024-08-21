@@ -5,7 +5,7 @@ if you want admin access -> go to localhost:8080 -> users -> add user / use exis
 //TO DO: Automate all these - docker compose
 
 // to run pgAdmin in local
-docker run --name my-pgadmin -p 8080:80 -e PGADMIN_DEFAULT_EMAIL=user@example.com -e PGADMIN_DEFAULT_PASSWORD=admin -d dpage/pgadmin4
+docker run --name my-pgadmin -p 8090:80 -e PGADMIN_DEFAULT_EMAIL=user@example.com -e PGADMIN_DEFAULT_PASSWORD=admin -d dpage/pgadmin4
 
 //configuration properties
 host: host.docker.internal
@@ -34,3 +34,25 @@ VALUES
     ('watch5', 'Description for Product D', 49.99, 'images/products/watch5.jpg.jpg', 75, NOW(), NOW()),
     ('watch6', 'Description for Product E', 59.99, 'images/products/watch6.jpg.jpg', 10, NOW(), NOW());
     ('watch7', 'Description for Product E', 59.99, 'images/products/watch7.jpg.jpg', 10, NOW(), NOW());
+
+
+
+## RabbitMQ Setup
+
+RabbitMQ is configured in the `docker-compose.yml` file. It is automatically started along with other services.
+
+### Access RabbitMQ Management Console
+
+- **URL:** [http://localhost:15672](http://localhost:15672)
+- **Username:** `user`
+- **Password:** `password`
+
+### Queues and Exchanges
+
+- **Order Queue:** `orderQueue`
+- **Status Queue:** `statusQueue`
+- **Exchange:** `orderExchange`
+
+### Using RabbitMQ in Services
+
+Services can send and receive messages through the RabbitMQ configuration in their respective microservices.

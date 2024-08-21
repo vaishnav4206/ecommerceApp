@@ -36,7 +36,11 @@ export class KeycloakService {
     if(authenticated){
       this._profile = (await this.keyCloak?.loadUserProfile()) as UserProfile;
       this._profile.token = this.keyCloak?.token;
+      
       console.log("my profile",this._profile)
+      if(this._profile.sub !== null || this._profile.sub !== ''){
+        sessionStorage.setItem('userId', this._profile.sub);
+      }
     }
   }
 
