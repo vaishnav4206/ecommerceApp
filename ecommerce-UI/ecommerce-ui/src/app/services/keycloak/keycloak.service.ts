@@ -38,8 +38,9 @@ export class KeycloakService {
       this._profile.token = this.keyCloak?.token;
       
       console.log("my profile",this._profile)
-      if(this._profile.sub !== null || this._profile.sub !== ''){
-        sessionStorage.setItem('userId', this._profile.sub);
+      if(this._profile.id !== null || this._profile.id !== ''){
+      console.log("my user id",this._profile.id)
+        sessionStorage.setItem('userId', this._profile.id);
       }
     }
   }

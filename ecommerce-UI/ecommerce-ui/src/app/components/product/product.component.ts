@@ -25,7 +25,11 @@ export class ProductComponent implements OnInit {
   }
 
   addToCart(product: Product): void {
-    const userId = 'user-123'; 
+    const userId = sessionStorage.getItem('userId'); 
+    if(userId == null){
+      console.error("user id is null");
+      return;
+    }
     const cartItem: CartItem = {
       userId: userId,
       productId: product.id,

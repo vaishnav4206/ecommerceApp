@@ -10,7 +10,8 @@ import { CartService } from '../../../services/cart/cart.service';
 export class CartComponent {
 
   cartItems: CartItem[] = [];
-  userId: string = 'user-123'; // Replace with the actual user ID
+  userId: string | null = sessionStorage.getItem('userId');
+  // totalAmount: number = 0;
 
   constructor(private cartService: CartService) {}
 
@@ -19,9 +20,16 @@ export class CartComponent {
   }
 
   loadCartItems(): void {
-    this.cartService.getCartItems(this.userId).subscribe((data: CartItem[]) => {
-      this.cartItems = data;
-    });
+    if(this.userId != null){
+      console.log("inside userid not null condition")
+      this.cartService.getCartItems(this.userId).subscribe((data: CartItem[]) => {
+        this.cartItems = data;
+      });
+    }
+    else {
+      console.log("user id is null")
+    }
+    
   }
 
   // updateQuantity(cartItem: CartItem, newQuantity: number): void {
@@ -47,6 +55,15 @@ export class CartComponent {
     }
     
   }
+
+  calculateTotal(): number {
+    return this.cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+  }
+  
+  proceedToBuy(): void {
+    console.log('Proceeding to buy');
+  }
+  
 
 //   increaseQuantity(item: CartItem): void {
 //     item.quantity++;
