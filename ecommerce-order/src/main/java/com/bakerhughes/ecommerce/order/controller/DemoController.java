@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/order-demo")
 public class DemoController {
+    // TO DO: remove
 
     @GetMapping("/hello")
     @PreAuthorize("hasRole('client-user')")

@@ -12,6 +12,7 @@ export class CartComponent {
   cartItems: CartItem[] = [];
   userId: string | null = sessionStorage.getItem('userId');
   // totalAmount: number = 0;
+  // TO DO: ui responsiveness 
 
   constructor(private cartService: CartService) {}
 

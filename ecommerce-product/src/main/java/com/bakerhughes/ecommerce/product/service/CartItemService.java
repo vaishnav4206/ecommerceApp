@@ -47,6 +47,7 @@ public class CartItemService {
                 .orElseThrow(() -> new RuntimeException("CartItem not found"));
         cartItem.setQuantity(quantity);
         orderService.sendOrderMessage();
+
         return cartItemRepository.save(cartItem);
     }
 }

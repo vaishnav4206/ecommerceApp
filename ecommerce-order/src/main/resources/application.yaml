@@ -20,6 +20,7 @@ spring:
     port: 5672
     username: user
     password: password
+    virtual-host: /
     exchange:
       order: orderExchange
     routing-key:
