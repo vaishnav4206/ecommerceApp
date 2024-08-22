@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <!-- Create the Product table -->
+    <changeSet id="1" author="vaishnav">
+        <createTable tableName="product">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="TEXT"/>
+            <column name="price" type="DECIMAL(10,2)"/>
+            <column name="image_url" type="VARCHAR(255)"/>
+            <column name="stock_quantity" type="INT"/>
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2" author="vaishnav">
+        <insert tableName="product">
+            <column name="name" value="watch1"/>
+            <column name="description" value="Description for Product A"/>
+            <column name="price" valueNumeric="19.99"/>
+            <column name="image_url" value="images/products/watch1.jpg"/>
+            <column name="stock_quantity" valueNumeric="100"/>
+            <column name="created_at" valueDate="NOW()"/>
+            <column name="updated_at" valueDate="NOW()"/>
+        </insert>
+
+        <insert tableName="product">
+            <column name="name" value="watch2"/>
+            <column name="description" value="Description for Product B"/>
+            <column name="price" valueNumeric="29.99"/>
+            <column name="image_url" value="images/products/watch2.jpg"/>
+            <column name="stock_quantity" valueNumeric="50"/>
+            <column name="created_at" valueDate="NOW()"/>
+            <column name="updated_at" valueDate="NOW()"/>
+        </insert>
+
+        <insert tableName="product">
+            <column name="name" value="watch3"/>
+            <column name="description" value="Description for Product C"/>
+            <column name="price" valueNumeric="39.99"/>
+            <column name="image_url" value="images/products/watch3.jpg"/>
+            <column name="stock_quantity" valueNumeric="25"/>
+            <column name="created_at" valueDate="NOW()"/>
+            <column name="updated_at" valueDate="NOW()"/>
+        </insert>
+
+        <insert tableName="product">
+            <column name="name" value="watch5"/>
+            <column name="description" value="Description for Product D"/>
+            <column name="price" valueNumeric="49.99"/>
+            <column name="image_url" value="images/products/watch5.jpg"/>
+            <column name="stock_quantity" valueNumeric="75"/>
+            <column name="created_at" valueDate="NOW()"/>
+            <column name="updated_at" valueDate="NOW()"/>
+        </insert>
+
+        <insert tableName="product">
+            <column name="name" value="watch6"/>
+            <column name="description" value="Description for Product E"/>
+            <column name="price" valueNumeric="59.99"/>
+            <column name="image_url" value="images/products/watch6.jpg"/>
+            <column name="stock_quantity" valueNumeric="10"/>
+            <column name="created_at" valueDate="NOW()"/>
+            <column name="updated_at" valueDate="NOW()"/>
+        </insert>
+
+        <insert tableName="product">
+            <column name="name" value="watch7"/>
+            <column name="description" value="Description for Product F"/>
+            <column name="price" valueNumeric="59.99"/>
+            <column name="image_url" value="images/products/watch7.jpg"/>
+            <column name="stock_quantity" valueNumeric="10"/>
+            <column name="created_at" valueDate="NOW()"/>
+            <column name="updated_at" valueDate="NOW()"/>
+        </insert>
+    </changeSet>
+
+
+</databaseChangeLog>

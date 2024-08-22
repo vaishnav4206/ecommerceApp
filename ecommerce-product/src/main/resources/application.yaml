@@ -25,6 +25,11 @@ spring:
     routing-key:
       order: order.new
 
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog-master.xml
+
+
 server:
   port: 8081
 
