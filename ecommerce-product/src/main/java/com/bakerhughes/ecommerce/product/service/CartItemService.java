@@ -38,7 +38,7 @@ public class CartItemService {
 
     public void removeCartItem(Long id) {
         cartItemRepository.deleteById(id);
-        orderService.sendOrderMessage("item deleted from cart");
+//        orderService.sendOrderMessage("item deleted from cart");
     }
 
     @Transactional
@@ -46,7 +46,7 @@ public class CartItemService {
         CartItem cartItem = cartItemRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("CartItem not found"));
         cartItem.setQuantity(quantity);
-        orderService.sendOrderMessage();
+//        orderService.sendOrderMessage();
 
         return cartItemRepository.save(cartItem);
     }

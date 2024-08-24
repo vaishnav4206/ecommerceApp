@@ -4,8 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -17,6 +16,9 @@ import java.util.List;
 @Table(name = "orders")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Order {
 
     @Id
@@ -53,5 +55,14 @@ public class Order {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    // Getters and Setters
+    public Order(String userId, List<Long> productIds, BigDecimal totalAmount) {
+        this.userId = userId;
+        this.productIds = productIds;
+        this.totalAmount = totalAmount;
+        this.status = "PENDING";
+        this.rushDelivery = totalAmount.compareTo(BigDecimal.valueOf(100)) > 0;
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+
 }

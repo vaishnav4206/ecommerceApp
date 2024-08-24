@@ -1,7 +1,10 @@
 package com.bakerhughes.ecommerce.order.service;
 
+import com.bakerhughes.ecommerce.order.model.Order;
 import com.bakerhughes.ecommerce.order.model.OrderRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,10 +19,13 @@ public class OrderMessageListener {
     @RabbitListener(queues = "orderQueue")
     public void handleMessage(String message) {
         try {
-            OrderRequest orderRequest = objectMapper.readValue(message, OrderRequest.class);
+
+            Order orderRequest = objectMapper.readValue(message, Order.class);
             // Process the order
             System.out.println("Received Order request: " + orderRequest);
             System.out.println("Received Order request - user: " + orderRequest.getUserId());
+            System.out.println("Received Order request - user: " + orderRequest.getProductIds());
+            System.out.println("Received Order request - user: " + orderRequest.getCreatedAt());
         } catch (Exception e) {
             // TO DO: exception handling
             e.printStackTrace();

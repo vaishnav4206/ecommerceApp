@@ -15,6 +15,8 @@ public class OrderService {
 
     @Autowired
     private OrderRepository orderRepository;
+    @Autowired
+    private OrderMessageSender orderMessageSender;
 
     @Transactional
     public Order createOrder(String userId, List<Long> productIds, BigDecimal totalAmount) {
@@ -32,7 +34,12 @@ public class OrderService {
         order.setStatus("PENDING");
 
         // Save the order to the database
-        return orderRepository.save(order);
+        orderRepository.save(order);
+
+        // Send the order to the queue
+        orderMessageSender.sendOrderMessage(order);
+
+        return order;
     }
 
 }

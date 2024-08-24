@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
-
+// remove this class as we don't need this in Product
 @Service
 public class OrderService {
 
@@ -48,4 +48,5 @@ public class OrderService {
         orderRequest.setTotalAmount(BigDecimal.valueOf(99.99));
         rabbitTemplate.convertAndSend("orderExchange", "order.new",orderRequest);
     }
+
 }

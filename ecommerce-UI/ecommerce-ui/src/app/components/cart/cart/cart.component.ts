@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { CartItem } from '../../../model/cartItem';
 import { CartService } from '../../../services/cart/cart.service';
+import { OrderService } from '../../../services/order/order.service';
+import { OrderRequest } from '../../../model/order-request';
 
 @Component({
   selector: 'app-cart',
@@ -11,10 +13,13 @@ export class CartComponent {
 
   cartItems: CartItem[] = [];
   userId: string | null = sessionStorage.getItem('userId');
-  // totalAmount: number = 0;
-  // TO DO: ui responsiveness 
+  totalAmount: number = 0;
+  // TO DO: ui responsiveness fix
 
-  constructor(private cartService: CartService) {}
+  constructor(
+    private cartService: CartService,
+    private orderService: OrderService
+  ) {}
 
   ngOnInit(): void {
     this.loadCartItems();
@@ -25,6 +30,7 @@ export class CartComponent {
       console.log("inside userid not null condition")
       this.cartService.getCartItems(this.userId).subscribe((data: CartItem[]) => {
         this.cartItems = data;
+      console.log(this.cartItems)
       });
     }
     else {
@@ -32,13 +38,6 @@ export class CartComponent {
     }
     
   }
-
-  // updateQuantity(cartItem: CartItem, newQuantity: number): void {
-  //   cartItem.quantity = newQuantity;
-  //   this.cartService.updateCartItem(cartItem).subscribe(() => {
-  //     console.log(`${cartItem.productName} quantity updated to ${newQuantity}`);
-  //   });
-  // }
 
   updateQuantity(cartItem: CartItem, newQuantity: number): void {
     cartItem.quantity = newQuantity;
@@ -58,25 +57,36 @@ export class CartComponent {
   }
 
   calculateTotal(): number {
-    return this.cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+     this.totalAmount = this.cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+     return this.totalAmount;
+  }
+
+  getProductIdsFromCartItems(): number[] {
+    const productIdInCart: number[] = [];
+    this.cartItems.forEach(carItem => productIdInCart.push(carItem.productId));
+    return productIdInCart;
   }
   
   proceedToBuy(): void {
-    console.log('Proceeding to buy');
+    const orderRequest:OrderRequest = {
+      userId: this.userId,
+      productIds: this.getProductIdsFromCartItems(),
+      totalAmount: this.totalAmount,
+      rushDelivery: this.totalAmount > 100
+    }
+
+    console.log("order req: ", orderRequest)
+    this.orderService.placeOrder(orderRequest).subscribe({
+      next: (data) => {
+        console.log('Order placed successfully:', data);
+      },
+      error: (err) => {
+        console.error('Error placing order:', err);
+      },
+      complete: () => {
+        console.log('Order placement complete');
+      }
+    });
   }
   
-
-//   increaseQuantity(item: CartItem): void {
-//     item.quantity++;
-//     this.updateQuantity(item, item.quantity);
-// }
-
-// decreaseQuantity(item: CartItem): void {
-//     if (item.quantity > 1) {
-//         item.quantity--;
-//         this.updateQuantity(item, item.quantity);
-//     }
-// }
-
-
 }
