@@ -41,6 +41,8 @@ export class ProductComponent implements OnInit {
     this.cartService.addCartItem(cartItem).subscribe(() => {
       console.log(`${product.name} added to cart!`);
     });
+
+    product.addedToCart = true;
   }
 
 }

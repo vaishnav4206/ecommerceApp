@@ -1,20 +1,23 @@
-<div class="product-list">
-    <div class="product-card" *ngFor="let product of products">
-        <img [src]="'images/products/' + product.name + '.jpg'" alt="{{product.name}}">
-        <h2>{{product.name}}</h2>
-        <p>{{product.description}}</p>
-        <p class="price">{{product.price | currency}}</p>
-        <button mat-raised-button (click)="addToCart(product)">Add to Cart</button>
-        <!-- <button class="add-to-cart-btn">Add to Cart</button> -->
-    </div>
-</div>
-
 <!-- <div class="product-list">
     <div class="product-card" *ngFor="let product of products">
         <img [src]="'images/products/' + product.name + '.jpg'" alt="{{product.name}}">
         <h2>{{product.name}}</h2>
         <p>{{product.description}}</p>
         <p class="price">{{product.price | currency}}</p>
-        <button class="add-to-cart">Add to Cart</button>
+        <button mat-raised-button (click)="addToCart(product)">Add to Cart</button>
     </div>
 </div> -->
+
+<div class="product-list">
+    <div class="product-card" *ngFor="let product of products">
+        <img [src]="'images/products/' + product.name + '.jpg'" alt="{{product.name}}">
+        <h2>{{product.name}}</h2>
+        <p>{{product.description}}</p>
+        <p class="price">{{product.price | currency}}</p>
+        <button mat-raised-button 
+                (click)="addToCart(product)" 
+                [disabled]="product.addedToCart">
+            {{ product.addedToCart ? 'Moved to Cart' : 'Add to Cart' }}
+        </button>
+    </div>
+</div>

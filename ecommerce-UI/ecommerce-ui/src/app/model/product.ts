@@ -7,4 +7,5 @@ export interface Product {
     stockQuantity: number;
     createdAt: Date;
     updatedAt: Date;
+    addedToCart?: boolean; 
 }
