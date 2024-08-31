@@ -26,7 +26,6 @@ public class OrderMessageSender {
 
     public void sendOrderMessage(Order order) {
         try {
-//            String message = objectMapper.writeValueAsString(order);
             rabbitTemplate.convertAndSend(exchange, routingKey, order);
         } catch (Exception e) {
             // TO DO:

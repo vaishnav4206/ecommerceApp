@@ -16,6 +16,9 @@ public class OrderMessageListener {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
+    OrderService orderService;
+
     @RabbitListener(queues = "orderQueue")
     public void handleMessage(String message) {
         try {
@@ -23,12 +26,14 @@ public class OrderMessageListener {
             Order orderRequest = objectMapper.readValue(message, Order.class);
             // Process the order
             System.out.println("Received Order request: " + orderRequest);
-            System.out.println("Received Order request - user: " + orderRequest.getUserId());
-            System.out.println("Received Order request - user: " + orderRequest.getProductIds());
-            System.out.println("Received Order request - user: " + orderRequest.getCreatedAt());
+            // Process the order
+            orderService.processStandardOrder(orderRequest);
+
         } catch (Exception e) {
             // TO DO: exception handling
             e.printStackTrace();
         }
     }
+
+
 }
