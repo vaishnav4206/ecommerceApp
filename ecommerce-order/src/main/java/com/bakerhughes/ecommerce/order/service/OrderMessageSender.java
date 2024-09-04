@@ -33,4 +33,8 @@ public class OrderMessageSender {
             e.printStackTrace();
         }
     }
+
+    public void sendNotification(String message) {
+        rabbitTemplate.convertAndSend("notification-exchange", "order.status.update", message);
+    }
 }

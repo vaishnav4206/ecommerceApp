@@ -7,6 +7,7 @@ import { UserComponent } from './components/user/user.component';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 import { ProductComponent } from './components/product/product.component';
 import { CartComponent } from './components/cart/cart/cart.component';
+import { NotificationComponent } from './components/order/notification/notification/notification.component';
 
 const routes: Routes = [
   { path: 'admin', component: AdminComponent, canActivate: [AdminGuard] },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'user', component: UserComponent, canActivate: [UserGuard] },
   { path: 'unauthorized', component: UnauthorizedComponent },
   { path: 'cart', component: CartComponent },
+  { path: 'notification', component: NotificationComponent },
   { path: '', redirectTo: 'products', pathMatch: 'full' }
 ];
 

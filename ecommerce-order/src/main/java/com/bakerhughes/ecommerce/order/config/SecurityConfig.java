@@ -25,20 +25,38 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable().
-                authorizeHttpRequests()
-                .anyRequest()
-                .authenticated();
 
-        http.oauth2ResourceServer()
-                .jwt()
-                        .jwtAuthenticationConverter(jwtAuthConverter);
+//        http.csrf().disable().
+//                authorizeHttpRequests()
+//                .anyRequest()
+//                .authenticated();
+//
+//        http.oauth2ResourceServer()
+//                .jwt()
+//                        .jwtAuthenticationConverter(jwtAuthConverter);
+//
+//        http.sessionManagement()
+//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+//
+//        // Apply the CORS configuration
+//        http.cors();
+//
+//        return http.build();
 
-        http.sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-        // Apply the CORS configuration
-        http.cors();
+        http
+                .csrf().disable() // Disable CSRF for WebSocket support
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/ws-notifications/**").permitAll() // Secure WebSocket endpoints
+                        .anyRequest().authenticated()
+                )
+                .oauth2ResourceServer(oauth2 -> oauth2
+                        .jwt()
+                        .jwtAuthenticationConverter(jwtAuthConverter)
+                )
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+                .cors(); // Apply CORS configuration
 
         return http.build();
     }

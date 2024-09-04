@@ -31,6 +31,21 @@ public class RabbitMQConfig {
     }
 
     @Bean
+    public TopicExchange notificationExchange() {
+        return new TopicExchange("notification-exchange");
+    }
+
+    @Bean
+    public Queue notificationQueue() {
+        return new Queue("notification-queue");
+    }
+
+    @Bean
+    public Binding binding(Queue notificationQueue, TopicExchange notificationExchange) {
+        return BindingBuilder.bind(notificationQueue).to(notificationExchange).with("order.status.#");
+    }
+
+    @Bean
     public Binding bindingOrderQueue(Queue orderQueue, TopicExchange exchange) {
         return BindingBuilder.bind(orderQueue).to(exchange).with("order.#");
     }

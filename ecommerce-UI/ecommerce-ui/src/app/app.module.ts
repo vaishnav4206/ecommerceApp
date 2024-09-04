@@ -24,6 +24,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { CartComponent } from './components/cart/cart/cart.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { NotificationComponent } from './components/order/notification/notification/notification.component';
 
 export function keycloakFactory(keycloakService: KeycloakService) {
   return () => keycloakService.init();
@@ -38,7 +39,8 @@ export function keycloakFactory(keycloakService: KeycloakService) {
     ProductComponent,
     HeaderComponent,
     FooterComponent,
-    CartComponent
+    CartComponent,
+    NotificationComponent
   ],
   imports: [
     BrowserModule,

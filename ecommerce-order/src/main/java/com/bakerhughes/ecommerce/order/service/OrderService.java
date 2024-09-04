@@ -54,8 +54,11 @@ public class OrderService {
             // Update the order status to PROCESSING
             order.setStatus("PROCESSING");
 
+            // Notify the user via WebSocket
+            notificationService.sendOrderStatusUpdate(order.getUserId(), "Your order status is now: " + order.getStatus());
+
             // Send notification to the user
-            notificationService.sendOrderConfirmation(order.getUserId(), order);
+            // notificationService.sendOrderConfirmation(order.getUserId(), order);
 
             // Further order processing logic (e.g., payment processing, inventory management)
             // This could involve other microservices or further message queue interactions
