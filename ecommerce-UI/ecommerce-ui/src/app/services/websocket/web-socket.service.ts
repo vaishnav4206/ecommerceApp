@@ -11,7 +11,11 @@ export class WebSocketService {
 
 
   private stompClient: Client;
-  private orderUpdatesSubject: Subject<string> = new Subject<string>();
+  private notifications: string[] = [];
+  private notificationSubject: Subject<string[]> = new Subject<string[]>();
+  private unreadCount: number = 0;
+  private unreadCountSubject: Subject<number> = new Subject<number>();
+  //private orderUpdatesSubject: Subject<string> = new Subject<string>();
 
   constructor(private keycloakService: KeycloakService) {
     const socket = new SockJS('http://localhost:8082/ws-notifications');
@@ -21,7 +25,10 @@ export class WebSocketService {
       onConnect: () => {
         this.stompClient.subscribe('/topic/order-status-updates', (message) => {
           console.log("message from stomp client: ", message)
-          this.orderUpdatesSubject.next(message.body);
+          this.notifications.push(message.body);
+          this.notificationSubject.next([...this.notifications]);
+          this.incrementUnreadCount();
+          //this.orderUpdatesSubject.next(message.body);
         });
       },
       onStompError: (frame) => {
@@ -36,8 +43,27 @@ export class WebSocketService {
     this.stompClient.activate();
   }
 
-  getOrderUpdates(): Observable<string> {
-    return this.orderUpdatesSubject.asObservable();
+  getOrderUpdates(): Observable<string[]> {
+    return this.notificationSubject.asObservable(); 
+    //return this.orderUpdatesSubject.asObservable();
+  }
+
+  getStoredNotifications(): string[] {
+    return this.notifications;
+  }
+
+  getUnreadCount(): Observable<number> {
+    return this.unreadCountSubject.asObservable();  // Observable for the unread count
+  }
+
+  private incrementUnreadCount(): void {
+    this.unreadCount++;
+    this.unreadCountSubject.next(this.unreadCount);  // Emit new unread count
+  }
+
+  resetUnreadCount(): void {
+    this.unreadCount = 0;
+    this.unreadCountSubject.next(this.unreadCount);  // Reset unread count and emit the update
   }
 }
 

@@ -1,0 +1,18 @@
+.container {
+    padding: 20px;
+  }
+  
+  .order-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 20px;
+  }
+  
+  .order-card {
+    cursor: pointer;
+    transition: box-shadow 0.3s;
+  
+    &:hover {
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+  }

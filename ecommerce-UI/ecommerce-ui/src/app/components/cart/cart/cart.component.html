@@ -25,7 +25,7 @@
   <mat-card class="cart-summary">
     <h3>Order Summary</h3>
     <p>Total: {{ calculateTotal() | currency }}</p>
-    <button mat-raised-button color="primary" (click)="proceedToBuy()">
+    <button mat-raised-button color="primary" [disabled]="calculateTotal() < 1" (click)="proceedToBuy()">
       <mat-icon *ngIf="calculateTotal() > 100">bolt</mat-icon> Proceed to Buy
     </button>
     <div *ngIf="calculateTotal() > 100" class="rush-delivery">

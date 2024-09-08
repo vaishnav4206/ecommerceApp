@@ -9,6 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+/**
+ * Test controller to manually send notifications to Web Socket
+ */
 @Controller
 public class WebSocketController {
 

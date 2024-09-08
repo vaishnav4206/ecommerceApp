@@ -22,6 +22,9 @@ public class OrderController {
     @PostMapping
     public ResponseEntity<Order> createOrder(@RequestBody OrderRequest orderRequest) {
 
+        if (orderRequest.getProductIds() == null || orderRequest.getProductIds().isEmpty()) {
+            throw new IllegalArgumentException("At least one product must be added to the order.");
+        }
 
         Order order = orderService.createOrder(
                 orderRequest.getUserId(),
@@ -29,5 +32,10 @@ public class OrderController {
                 orderRequest.getTotalAmount()
         );
         return ResponseEntity.ok(order);
+    }
+
+    @GetMapping("/{userId}")
+    public List<Order> getCartItems(@PathVariable String userId) {
+        return orderService.getOrders(userId);
     }
 }

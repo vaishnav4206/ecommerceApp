@@ -3,6 +3,8 @@ import { CartItem } from '../../../model/cartItem';
 import { CartService } from '../../../services/cart/cart.service';
 import { OrderService } from '../../../services/order/order.service';
 import { OrderRequest } from '../../../model/order-request';
+import { MatDialog } from '@angular/material/dialog';
+import { OrderConfirmationDialogComponent } from '../order-confirmation-dialog/order-confirmation-dialog.component';
 
 @Component({
   selector: 'app-cart',
@@ -18,7 +20,8 @@ export class CartComponent {
 
   constructor(
     private cartService: CartService,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -79,6 +82,8 @@ export class CartComponent {
     this.orderService.placeOrder(orderRequest).subscribe({
       next: (data) => {
         console.log('Order placed successfully:', data);
+        this.openOrderConfirmationDialog();
+        this.clearCartItems();
       },
       error: (err) => {
         console.error('Error placing order:', err);
@@ -87,6 +92,26 @@ export class CartComponent {
         console.log('Order placement complete');
       }
     });
+  }
+
+  openOrderConfirmationDialog(): void {
+    const dialogRef = this.dialog.open(OrderConfirmationDialogComponent, {
+      width: '400px', 
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  clearCartItems(): void {
+    if (this.userId !== null) {
+      this.cartService.clearCartItems(this.userId).subscribe(() => {
+        console.log('Cart items cleared successfully');
+        // Optionally, you can reload the cart items to update the UI
+        this.loadCartItems();
+      });
+    }
   }
   
 }

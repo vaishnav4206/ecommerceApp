@@ -16,4 +16,8 @@ export class OrderService {
   placeOrder(orderRequest: OrderRequest): Observable<Order> {
     return this.http.post<Order>(this.apiUrl, orderRequest);
   } 
+
+  getOrders(userId: string): Observable<Order[]> {
+    return this.http.get<Order[]>(`${this.apiUrl}/${userId}`);
+  }
 }

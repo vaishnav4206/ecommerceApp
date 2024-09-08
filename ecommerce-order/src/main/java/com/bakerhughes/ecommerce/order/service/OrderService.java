@@ -13,6 +13,12 @@ import java.util.List;
 @Service
 public class OrderService {
 
+    private static final String PENDING = "PENDING";
+    private static final String PROCESSING = "PROCESSING";
+    private static final String RUSH_PROCESSING = "RUSH_DELIVERY_PROCESSING";
+    private static final String COMPLETED = "COMPLETED";
+    private static final String ORDER_STATUS_PRE_TEXT = "Your order status is now: ";
+
     @Autowired
     private OrderRepository orderRepository;
     @Autowired
@@ -33,7 +39,7 @@ public class OrderService {
         order.setRushDelivery(totalAmount.compareTo(BigDecimal.valueOf(100)) > 0);
 
         // Set initial order status
-        order.setStatus("PENDING");
+        order.setStatus(PENDING);
 
         // Save the order to the database
         orderRepository.save(order);
@@ -44,21 +50,26 @@ public class OrderService {
         return order;
     }
 
+    public List<Order> getOrders(String userId) {
+        return orderRepository.findByUserId(userId);
+    }
+
     public void processStandardOrder(Order order) {
+        System.out.println("processing order: " + order.getProductIds());
+
         try {
             // Special handling for rush delivery
             if (order.isRushDelivery()) {
                 handleRushDelivery(order);
             }
+            else {
+                // Update the order status to PROCESSING
+                order.setStatus(PROCESSING);
 
-            // Update the order status to PROCESSING
-            order.setStatus("PROCESSING");
+                // Notify the user via WebSocket
+                notificationService.sendOrderStatusUpdate(order.getUserId(), ORDER_STATUS_PRE_TEXT + order.getStatus());
+            }
 
-            // Notify the user via WebSocket
-            notificationService.sendOrderStatusUpdate(order.getUserId(), "Your order status is now: " + order.getStatus());
-
-            // Send notification to the user
-            // notificationService.sendOrderConfirmation(order.getUserId(), order);
 
             // Further order processing logic (e.g., payment processing, inventory management)
             // This could involve other microservices or further message queue interactions
@@ -74,22 +85,26 @@ public class OrderService {
 
     private void handleRushDelivery(Order order) {
         // Update order status for rush delivery processing
-        order.setStatus("RUSH_DELIVERY_PROCESSING");
+        order.setStatus(RUSH_PROCESSING);
 
-        // Send notification to the user about rush delivery
-        notificationService.sendRushDeliveryNotification(order);
 
-        // TO DO: Add additional rush delivery logic here, such as prioritizing the order in the system
+        // Notify the user via WebSocket
+        notificationService.sendOrderStatusUpdate(order.getUserId(), ORDER_STATUS_PRE_TEXT + order.getStatus());
+
+
+        // TODO: Add additional rush delivery logic here, such as prioritizing the order in the system
     }
 
     private void finalizeOrder(Order order) {
+        System.out.println("finalizing order: " + order.getProductIds());
         // Finalize the order (e.g., mark as COMPLETED, trigger shipping, etc.)
-        order.setStatus("COMPLETED");
+        order.setStatus(COMPLETED);
         order.setUpdatedAt(LocalDateTime.now());
         orderRepository.save(order);
 
         // Notify the user of order completion
-        notificationService.sendOrderCompletionNotification(order.getUserId(), order);
+        notificationService.sendOrderStatusUpdate(order.getUserId(), ORDER_STATUS_PRE_TEXT + order.getStatus());
+
     }
 
 }

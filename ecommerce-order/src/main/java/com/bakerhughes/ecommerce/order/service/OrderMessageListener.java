@@ -2,6 +2,7 @@ package com.bakerhughes.ecommerce.order.service;
 
 import com.bakerhughes.ecommerce.order.model.Order;
 import com.bakerhughes.ecommerce.order.model.OrderRequest;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -20,7 +21,7 @@ public class OrderMessageListener {
     OrderService orderService;
 
     @RabbitListener(queues = "orderQueue")
-    public void handleMessage(String message) {
+    public void handleMessage(String message) throws JsonProcessingException {
         try {
 
             Order orderRequest = objectMapper.readValue(message, Order.class);
@@ -30,8 +31,9 @@ public class OrderMessageListener {
             orderService.processStandardOrder(orderRequest);
 
         } catch (Exception e) {
+            System.err.println("Error processing order: " + e.getMessage());
             // TO DO: exception handling
-            e.printStackTrace();
+            throw e; // This will send the message to the DLQ after the configured retries
         }
     }
 

@@ -21,37 +21,17 @@ public class NotificationService {
 
     public void sendOrderStatusUpdate(String userId, String statusUpdate) {
         // Send the update to a specific user via WebSocket
-//        messagingTemplate.convertAndSend("/topic/order-status/" + userId, statusUpdate);
-//        messagingTemplate.convertAndSend("/topic/order-status/" + "hello");
         orderMessageSender.sendNotification(statusUpdate);
-    }
-
-    public void sendOrderConfirmation(String userId, Order order) {
-        // Implement logic to send order confirmation notification
-        System.out.println("Sending order confirmation to user ID: " + userId);
-        // Example: Send email, SMS, push notification, etc.
-    }
-
-    public void sendOrderCompletionNotification(String userId, Order order) {
-        // Implement logic to send order completion notification
-        System.out.println("Sending order completion notification to user ID: " + userId);
-        messagingTemplate.convertAndSend("/topic/order-status-updates", "complete");
-    }
-
-    public void sendRushDeliveryNotification(Order order) {
-        // TODO: Implement the actual notification logic, such as sending an email or in-app notification
-        System.out.println("Rush delivery notification sent for order ID: " + order.getId());
     }
 
     @RabbitListener(queues = "notification-queue")
     public void listenForNotifications(String message) {
         try {
-            // Here you can customize the destination where the message will be sent
-            // For example, sending the message to a specific topic that UI is subscribed to
+            // whenever notification queue receives a message
+            // it will send the message to web socket to process notification to UI
             messagingTemplate.convertAndSend("/topic/order-status-updates", message);
         } catch (Exception e) {
             e.printStackTrace();
-            // Handle exceptions as needed
         }
     }
 }

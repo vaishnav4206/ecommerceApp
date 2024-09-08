@@ -8,14 +8,16 @@ import { WebSocketService } from '../../../../services/websocket/web-socket.serv
 })
 export class NotificationComponent {
 
-  notification: string | null = null;
+  notifications: string[] = [];
 
   constructor(private webSocketService: WebSocketService) {}
 
   ngOnInit(): void {
-    this.webSocketService.getOrderUpdates().subscribe((message: string) => {
-      this.notification = `Order Status Update: ${message}`;
-      console.log("hello notification recieved:", this.notification)
+    this.notifications = this.webSocketService.getStoredNotifications();
+    this.webSocketService.getOrderUpdates().subscribe((messages: string[]) => {
+      this.notifications = messages;
+      console.log("hello notification recieved:", this.notifications);
+      this.webSocketService.resetUnreadCount();
     });
   }
 

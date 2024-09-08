@@ -10,6 +10,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatDialogModule } from '@angular/material/dialog';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,6 +27,8 @@ import { FooterComponent } from './components/footer/footer.component';
 import { CartComponent } from './components/cart/cart/cart.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { NotificationComponent } from './components/order/notification/notification/notification.component';
+import { OrderHomeComponent } from './components/order/order-home/order-home/order-home.component';
+import { OrderConfirmationDialogComponent } from './components/cart/order-confirmation-dialog/order-confirmation-dialog.component';
 
 export function keycloakFactory(keycloakService: KeycloakService) {
   return () => keycloakService.init();
@@ -40,7 +44,9 @@ export function keycloakFactory(keycloakService: KeycloakService) {
     HeaderComponent,
     FooterComponent,
     CartComponent,
-    NotificationComponent
+    NotificationComponent,
+    OrderHomeComponent,
+    OrderConfirmationDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -56,6 +62,7 @@ export function keycloakFactory(keycloakService: KeycloakService) {
     MatIconModule,
     MatToolbarModule,
     MatSidenavModule,
+    MatDialogModule
   ],
   providers: [
     {
