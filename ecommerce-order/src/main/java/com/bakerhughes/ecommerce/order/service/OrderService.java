@@ -73,7 +73,13 @@ public class OrderService {
 
             // Further order processing logic (e.g., payment processing, inventory management)
             // This could involve other microservices or further message queue interactions
-
+            // adding a delay to mock the incoming notification
+            Thread.sleep(6000);
+            // adding a mock notification to indicate the delivery team is at the user's location
+            // for the future scope of this project, we can add a delivery service where,
+            // delivery microservice can be created and push an update in to the same notification queue
+            notificationService.sendOrderStatusUpdate(order.getUserId(),  "Delivery team reached your location!");
+            Thread.sleep(6000);
             // Finalize the order
             finalizeOrder(order);
 
