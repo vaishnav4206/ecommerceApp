@@ -1,5 +1,6 @@
 package com.bakerhughes.ecommerce.product.service;
 
+import com.bakerhughes.ecommerce.product.exception.ProductNotFoundException;
 import com.bakerhughes.ecommerce.product.model.Product;
 import com.bakerhughes.ecommerce.product.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,8 @@ public class ProductService {
     }
 
     public Optional<Product> getProductById(Long id) {
-        return productRepository.findById(id);
+        return Optional.ofNullable(productRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException("Product not found with id: " + id)));
     }
 
     public Product saveProduct(Product product) {

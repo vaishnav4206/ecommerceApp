@@ -15,7 +15,6 @@ import java.util.List;
 public class OrderController {
     // TO DO:
     // assign roles
-    // exception handling
     @Autowired
     private OrderService orderService;
 

@@ -1,5 +1,6 @@
 package com.bakerhughes.ecommerce.product.service;
 
+import com.bakerhughes.ecommerce.product.exception.CartItemNotFoundException;
 import com.bakerhughes.ecommerce.product.model.CartItem;
 import com.bakerhughes.ecommerce.product.repository.CartItemRepository;
 import jakarta.transaction.Transactional;
@@ -48,7 +49,7 @@ public class CartItemService {
     @Transactional
     public CartItem updateCartItemQuantity(Long id, int quantity) {
         CartItem cartItem = cartItemRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("CartItem not found"));
+                .orElseThrow(() -> new CartItemNotFoundException("CartItem not found with id: " + id));
         cartItem.setQuantity(quantity);
 
         return cartItemRepository.save(cartItem);

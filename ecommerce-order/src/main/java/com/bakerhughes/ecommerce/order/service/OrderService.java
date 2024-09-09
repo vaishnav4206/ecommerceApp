@@ -1,5 +1,6 @@
 package com.bakerhughes.ecommerce.order.service;
 
+import com.bakerhughes.ecommerce.order.exception.OrderNotFoundException;
 import com.bakerhughes.ecommerce.order.model.Order;
 import com.bakerhughes.ecommerce.order.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +52,11 @@ public class OrderService {
     }
 
     public List<Order> getOrders(String userId) {
-        return orderRepository.findByUserId(userId);
+        List<Order> orders = orderRepository.findByUserId(userId);
+        if (orders.isEmpty()) {
+            throw new OrderNotFoundException("No orders found for user with ID: " + userId);
+        }
+        return orders;
     }
 
     public void processStandardOrder(Order order) {
