@@ -46,7 +46,8 @@ public class SecurityConfig {
         http
                 .csrf().disable() // Disable CSRF for WebSocket support
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/ws-notifications/**").permitAll() // Secure WebSocket endpoints
+                        .requestMatchers("/ws-notifications/**").permitAll()
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2
